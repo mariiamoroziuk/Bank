@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RqOperationDto {
-    private String from;
-    private String to = null;
-    private Double amount;
+public class RqRecruitDto {
+    private Long employer_id;
+    private Long customer_id;
 }

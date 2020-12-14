@@ -1,18 +1,37 @@
 package bank.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import javax.persistence.*;
+import java.util.*;
 
 @Data
-public class Customer extends AbstractModel {
+@Entity
+@Table
+@NoArgsConstructor
+public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     String name;
     String email;
     Integer age;
+
+    @OneToMany (mappedBy="customer")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     List<Account> accounts = new ArrayList<>();
+
+    @ToString.Exclude
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "customer_employer",
+            joinColumns = {@JoinColumn(name = "customer_id")},
+            inverseJoinColumns = {@JoinColumn(name = "employer_id")}
+    )
+    Set<Employer> employers = new HashSet<>();
 
     public Customer(String name, String email, Integer age){
         this.name = name;
@@ -26,6 +45,11 @@ public class Customer extends AbstractModel {
         this.setAccounts(accounts);
     }
 
+    public Customer(Long id, String name, String email, Integer age, List<Account> accounts, HashSet<Employer> employers){
+        this(id, name, email, age, accounts);
+        this.setEmployers(employers);
+    }
+
     public Account addAccount(Account account){
         accounts.add(account);
         return account;
@@ -34,6 +58,16 @@ public class Customer extends AbstractModel {
     public Account deleteAccount(Account account){
         accounts.remove(account);
         return account;
+    }
+
+    public Employer addEmployer(Employer e){
+        employers.add(e);
+        return e;
+    }
+
+    public Employer deleteEmployer(Employer e){
+        employers.remove(e);
+        return e;
     }
 
     @Override

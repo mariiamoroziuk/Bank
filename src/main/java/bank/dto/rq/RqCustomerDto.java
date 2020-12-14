@@ -1,11 +1,9 @@
 package bank.dto.rq;
 
-import bank.model.Account;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -15,6 +13,7 @@ public class RqCustomerDto {
     String email;
     Integer age;
     List<RqAccountDto> accounts;
+    List<RqEmployerDto> employers;
 
     public RqCustomerDto(String name, String email, Integer age){
         this.name = name;

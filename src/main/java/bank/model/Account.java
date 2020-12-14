@@ -1,15 +1,29 @@
 package bank.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
 @Data
-public class Account extends AbstractModel {
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table
+public class Account {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String number;
     private Currency currency;
     private Double balance = 0.00;
+
+    @ManyToOne
+    @JoinColumn(name="customer_id")
     private Customer customer;
 
     public Account(Currency currency, Customer customer){

@@ -1,6 +1,6 @@
 package bank.dao;
 
-import bank.model.AbstractModel;
+import bank.model.AbstractEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Component
-public abstract class AbstractBankDao<T extends AbstractModel> implements Dao<T>{
+public abstract class AbstractBankDao<T extends AbstractEntity> implements Dao<T> {
 
     protected List<T> list;
     protected Long idCounter = 1L;
