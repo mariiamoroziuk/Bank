@@ -5,6 +5,7 @@ import bank.model.Account;
 import bank.model.Employer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
+@RequiredArgsConstructor
 public class RsCustomerDto implements Serializable {
     Long id;
     String name;
