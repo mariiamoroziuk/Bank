@@ -5,9 +5,9 @@ import bank.dto.rs.RsAccountDto;
 import bank.model.Account;
 import bank.repo.AccountRepository;
 import bank.repo.CustomerRepository;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import java.util.NoSuchElementException;
 
 @Service
@@ -20,7 +20,7 @@ public class AccountService {
          return repoC.findById(rqA.getCustomerId())
                 .map(c -> {
                     Account account = new Account(rqA.getCurrency(), c);
-                    c.addAccount(account);
+                    c.getAccounts().add(account);
                     Account saved = repoA.save(account);
                     return saved.getNumber();
                 })
@@ -30,7 +30,7 @@ public class AccountService {
     public String deleteAccount(String number){
         return repoA.findByNumber(number)
                 .map(ac -> {
-                    ac.getCustomer().deleteAccount(ac);
+                    ac.getCustomer().getAccounts().remove(ac);
                     repoA.delete(ac);
                     return ac.getNumber();
                 })
